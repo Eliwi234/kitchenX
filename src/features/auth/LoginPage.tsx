@@ -1,21 +1,31 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
+import { useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { Input } from "../../components/ui/Input";
 import { Button } from "../../components/ui/Button";
 
-const loginSchema = z.object({
-  email: z.string().email("Please enter a valid email address."),
-  password: z.string().min(8, "Password must be at least 8 characters."),
-});
-
-type LoginFormValues = z.infer<typeof loginSchema>;
+type LoginFormValues = {
+  email: string;
+  password: string;
+};
 
 export function LoginPage() {
   const navigate = useNavigate();
   const { t } = useTranslation();
+
+  const loginSchema = useMemo(
+    () =>
+      z.object({
+        email: z.string().email(t("validation_email_invalid")),
+        password: z
+          .string()
+          .min(8, t("validation_password_min", { count: 8 })),
+      }),
+    [t]
+  );
 
   const {
     register,
@@ -31,12 +41,12 @@ export function LoginPage() {
   };
 
   return (
-    <div className="w-full animate-fade-in">
-      <div className="mb-10">
+    <div className="w-full animate-fade-in px-1">
+      <div className="mb-10 text-center lg:text-start">
         <h2 className="text-3xl font-extrabold text-text-primary tracking-tight mb-3">
           {t("welcome_back")}
         </h2>
-        <p className="text-text-secondary text-base">
+        <p className="text-text-secondary text-base max-w-sm mx-auto lg:mx-0">
           {t("login_subtitle")}
         </p>
       </div>
@@ -72,13 +82,13 @@ export function LoginPage() {
         </div>
 
         <Button 
-          className="w-full h-12 text-[15px] font-semibold bg-gradient-to-r from-primary-dark to-primary hover:from-primary hover:to-primary-light shadow-xl shadow-primary/20 transition-all duration-300 hover:-translate-y-0.5" 
+          className="w-full h-12 text-[15px] font-semibold bg-gradient-to-r from-primary-dark to-primary hover:from-primary hover:to-primary-light shadow-lg shadow-primary/10 hover:shadow-primary/20 transition-all duration-300 hover:-translate-y-0.5 active:translate-y-0" 
           isLoading={isSubmitting}
         >
           {t("sign_in")}
         </Button>
       </form>
-      
     </div>
   );
 }
+

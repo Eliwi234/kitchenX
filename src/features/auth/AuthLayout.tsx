@@ -1,14 +1,15 @@
 import { Outlet } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { ChefHat, Star } from "lucide-react";
+import { Star } from "lucide-react";
+import logo from "../../assets/logo.png";
 
 export function AuthLayout() {
   const { t } = useTranslation();
 
   return (
-    <div className="min-h-screen flex text-text-primary bg-background selection:bg-primary selection:text-white">
+    <div className="min-h-screen flex text-text-primary bg-background selection:bg-primary selection:text-white overflow-x-hidden">
       {/* Left Pane - Image & Brand */}
-      <div className="hidden lg:flex lg:w-1/2 relative overflow-hidden bg-charcoal-900">
+      <div className="hidden lg:flex lg:w-1/2 relative overflow-hidden bg-charcoal-900 border-e border-border/10">
         {/* Background Image */}
         <div 
           className="absolute inset-0 z-0 bg-cover bg-center bg-no-repeat opacity-40 mix-blend-overlay transition-transform duration-1000 hover:scale-105"
@@ -21,7 +22,7 @@ export function AuthLayout() {
         <div className="relative z-20 flex flex-col justify-between p-16 w-full">
           <div>
             <div className="flex items-center gap-3">
-              <img src="/src/assets/logo.png" alt="KitchenX Logo" className="h-16 w-auto drop-shadow-md" />
+              <img src={logo} alt="KitchenX Logo" className="h-16 w-auto drop-shadow-md" />
             </div>
           </div>
 
@@ -53,13 +54,13 @@ export function AuthLayout() {
       </div>
 
       {/* Right Pane - Form */}
-      <div className="flex-1 flex flex-col justify-center px-8 sm:px-16 lg:px-24 xl:px-32 relative bg-surface">
+      <div className="flex-1 flex flex-col justify-center px-6 sm:px-12 lg:px-20 xl:px-24 relative bg-surface overflow-hidden">
         {/* Subtle decorative background blur for form side */}
-        <div className="absolute top-0 end-0 -me-32 -mt-32 w-[600px] h-[600px] bg-primary-50 rounded-full blur-[120px] opacity-60 pointer-events-none" />
+        <div className="absolute top-0 end-0 -me-32 -mt-32 w-[max(600px,80vw)] h-[max(600px,80vw)] bg-primary-50 rounded-full blur-[120px] opacity-60 pointer-events-none" />
         
         <div className="w-full max-w-md mx-auto relative z-10">
-          <div className="flex lg:hidden items-center gap-2 mb-12 justify-start">
-            <img src="/src/assets/logo.png" alt="KitchenX Logo" className="h-12 w-auto drop-shadow-sm" />
+          <div className="flex lg:hidden items-center gap-2 mb-10 justify-center">
+            <img src={logo} alt="KitchenX Logo" className="h-12 w-auto drop-shadow-sm" />
           </div>
           <Outlet />
         </div>
@@ -67,3 +68,4 @@ export function AuthLayout() {
     </div>
   );
 }
+

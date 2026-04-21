@@ -11,6 +11,7 @@ import {
   LogOut
 } from "lucide-react";
 import { cn } from "../../utils/cn";
+import logo from "../../assets/logo.png";
 
 interface SidebarProps {
   isOpen?: boolean;
@@ -18,7 +19,8 @@ interface SidebarProps {
 }
 
 export function Sidebar({ isOpen = false, setIsOpen }: SidebarProps) {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const isRtl = i18n.dir() === "rtl";
 
   const navigation = [
     { name: t("nav_dashboard"), href: "/dashboard", icon: LayoutDashboard },
@@ -30,20 +32,30 @@ export function Sidebar({ isOpen = false, setIsOpen }: SidebarProps) {
     { name: t("nav_settings"), href: "/dashboard/settings", icon: Settings },
   ];
 
+  const handleLinkClick = () => {
+    if (window.innerWidth < 768 && setIsOpen) {
+      setIsOpen(false);
+    }
+  };
+
   return (
     <div className={cn(
-      "fixed inset-y-0 start-0 z-50 flex h-full w-64 flex-col bg-charcoal text-white transition-transform duration-300 md:relative md:translate-x-0 shadow-2xl md:shadow-none",
-      isOpen ? "translate-x-0" : "rtl:translate-x-full ltr:-translate-x-full"
+      "fixed inset-y-0 start-0 z-50 flex h-full w-64 shrink-0 flex-col bg-charcoal text-white transition-transform duration-300 md:relative md:translate-x-0 shadow-2xl md:shadow-none",
+      !isOpen && (isRtl ? "translate-x-full md:translate-x-0" : "-translate-x-full md:translate-x-0"),
+      isOpen && "translate-x-0"
     )}>
+
+
       <div className="flex h-16 shrink-0 items-center justify-center gap-2 px-6 bg-charcoal-900 border-b border-charcoal-700 relative">
-        <img src="/src/assets/logo.png" alt="KitchenX Logo" className="h-10 w-auto" />
+        <img src={logo} alt="KitchenX Logo" className="h-10 w-auto" />
       </div>
 
-      <div className="flex flex-1 flex-col overflow-y-auto px-4 py-6 gap-1">
+      <div className="flex flex-1 flex-col overflow-y-auto px-4 py-6 gap-1 focus:outline-none">
         {navigation.map((item) => (
           <NavLink
             key={item.href}
             to={item.href}
+            onClick={handleLinkClick}
             end={item.href === "/dashboard"}
             className={({ isActive }) =>
               cn(
@@ -69,3 +81,4 @@ export function Sidebar({ isOpen = false, setIsOpen }: SidebarProps) {
     </div>
   );
 }
+

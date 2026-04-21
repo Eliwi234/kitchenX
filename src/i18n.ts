@@ -40,6 +40,8 @@ const resources = {
       "password_label": "Password",
       "forgot_password": "Forgot password?",
       "sign_in": "Sign in to Dashboard",
+      "validation_email_invalid": "Please enter a valid email address.",
+      "validation_password_min": "Password must be at least {{count}} characters.",
       
       "elevate_business": "Elevate your home culinary business.",
       "join_marketplace": "Join the premium marketplace connecting talented home chefs with local food enthusiasts.",
@@ -84,6 +86,8 @@ const resources = {
       "password_label": "كلمة المرور",
       "forgot_password": "نسيت كلمة المرور؟",
       "sign_in": "تسجيل الدخول",
+      "validation_email_invalid": "يرجى إدخال بريد إلكتروني صالح.",
+      "validation_password_min": "يجب أن تتكون كلمة المرور من {{count}} أحرف على الأقل.",
       
       "elevate_business": "ارتقِ بأعمال الطهي المنزلية إلى مستوى آخر.",
       "join_marketplace": "انضم إلى المنصة الرائدة التي تربط أمهر الطهاة بعشاق الطعام.",
@@ -92,7 +96,8 @@ const resources = {
   }
 };
 
-const storedData = localStorage.getItem('kitchenx-storage');
+const hasStorage = typeof window !== "undefined" && typeof window.localStorage !== "undefined";
+const storedData = hasStorage ? window.localStorage.getItem('kitchenx-storage') : null;
 let defaultLng = 'en';
 if (storedData) {
   try {
@@ -100,7 +105,9 @@ if (storedData) {
     if (parsed?.state?.language) {
       defaultLng = parsed.state.language;
     }
-  } catch(e) {}
+  } catch {
+    defaultLng = "en";
+  }
 }
 
 i18n
