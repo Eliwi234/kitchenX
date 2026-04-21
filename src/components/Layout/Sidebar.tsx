@@ -12,7 +12,12 @@ import {
 } from "lucide-react";
 import { cn } from "../../utils/cn";
 
-export function Sidebar() {
+interface SidebarProps {
+  isOpen?: boolean;
+  setIsOpen?: (isOpen: boolean) => void;
+}
+
+export function Sidebar({ isOpen = false, setIsOpen }: SidebarProps) {
   const { t } = useTranslation();
 
   const navigation = [
@@ -26,8 +31,11 @@ export function Sidebar() {
   ];
 
   return (
-    <div className="flex h-full w-64 flex-col bg-charcoal text-white transition-all duration-300">
-      <div className="flex h-16 shrink-0 items-center justify-center gap-2 px-6 bg-charcoal-900 border-b border-charcoal-700">
+    <div className={cn(
+      "fixed inset-y-0 start-0 z-50 flex h-full w-64 flex-col bg-charcoal text-white transition-transform duration-300 md:relative md:translate-x-0 shadow-2xl md:shadow-none",
+      isOpen ? "translate-x-0" : "rtl:translate-x-full ltr:-translate-x-full"
+    )}>
+      <div className="flex h-16 shrink-0 items-center justify-center gap-2 px-6 bg-charcoal-900 border-b border-charcoal-700 relative">
         <img src="/src/assets/logo.png" alt="KitchenX Logo" className="h-10 w-auto" />
       </div>
 

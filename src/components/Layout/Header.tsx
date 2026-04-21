@@ -1,20 +1,32 @@
-import { Bell, Search, Globe, Moon, Sun } from "lucide-react";
+import { Bell, Search, Globe, Moon, Sun, Menu } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { useAppStore } from "../../store/useAppStore";
 
-export function Header() {
+interface HeaderProps {
+  onMenuClick?: () => void;
+}
+
+export function Header({ onMenuClick }: HeaderProps) {
   const { theme, toggleTheme, language, toggleLanguage } = useAppStore();
   const { t } = useTranslation();
 
   return (
-    <header className="h-16 flex items-center justify-between px-8 bg-surface border-b border-border transition-colors duration-300">
-      <div className="flex-1 flex max-w-xl relative">
-        <Search className="absolute start-3 top-1/2 -translate-y-1/2 text-text-secondary" size={20} />
-        <input
-          type="text"
-          placeholder={t("search_placeholder")}
-          className="w-full ps-10 pe-4 py-2 bg-background border border-border rounded-lg text-sm text-text-primary focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all placeholder:text-text-secondary"
-        />
+    <header className="h-16 flex items-center justify-between px-4 sm:px-8 bg-surface border-b border-border transition-colors duration-300">
+      <div className="flex items-center gap-2 flex-1 max-w-xl relative">
+        <button 
+          onClick={onMenuClick}
+          className="md:hidden p-2 -ms-2 text-text-secondary hover:text-text-primary transition-colors"
+        >
+          <Menu size={24} />
+        </button>
+        <div className="hidden sm:block relative w-full h-full">
+          <Search className="absolute start-3 top-1/2 -translate-y-1/2 text-text-secondary" size={20} />
+          <input
+            type="text"
+            placeholder={t("search_placeholder")}
+            className="w-full ps-10 pe-4 py-2 bg-background border border-border rounded-lg text-sm text-text-primary focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all placeholder:text-text-secondary"
+          />
+        </div>
       </div>
 
       <div className="flex items-center gap-4 sm:gap-6 ms-4">
