@@ -25,19 +25,82 @@ export function ActivityTable() {
 
   return (
     <div className="bg-surface border border-border rounded-2xl shadow-sm overflow-hidden transition-colors duration-300">
-      <div className="px-6 py-5 border-b border-border flex justify-between items-center">
-        <h2 className="text-lg font-semibold text-text-primary">{t("recent_order_activity")}</h2>
-        <div className="flex gap-4">
+      <div className="px-4 sm:px-6 py-4 sm:py-5 border-b border-border flex flex-wrap gap-3 justify-between items-center">
+        <h2 className="text-base sm:text-lg font-semibold text-text-primary">{t("recent_order_activity")}</h2>
+        <div className="flex items-center gap-2 sm:gap-4">
           <button 
             onClick={handleSimulateNewOrder}
-            className="text-sm font-medium bg-background text-text-primary px-3 py-1.5 rounded-lg hover:opacity-80 border border-border transition-all"
+            className="text-xs sm:text-sm font-medium bg-background text-text-primary px-2.5 sm:px-3 py-1.5 rounded-lg hover:opacity-80 border border-border transition-all"
           >
             {t("simulate_order")}
           </button>
-          <button className="text-sm font-medium text-primary hover:opacity-80 transition-colors pt-1.5">{t("view_all")}</button>
+          <button className="text-xs sm:text-sm font-medium text-primary hover:opacity-80 transition-colors px-1">{t("view_all")}</button>
         </div>
       </div>
-      <div className="overflow-x-auto">
+
+      <div className="sm:hidden divide-y divide-border">
+        {orders.map((row) => (
+          <div key={row.id} className="p-4 space-y-3">
+            <div className="flex items-start justify-between gap-2">
+              <div>
+                <p className="text-sm font-semibold text-text-primary">{row.id}</p>
+                <p className="text-xs text-text-secondary mt-0.5">{row.date}</p>
+              </div>
+              <span className={`px-2.5 py-1 rounded-full text-[11px] font-semibold ${statusStyles[row.status]}`}>
+                {row.status}
+              </span>
+            </div>
+
+            <div className="grid grid-cols-2 gap-2 text-xs">
+              <div className="rounded-lg bg-background border border-border px-2.5 py-2">
+                <p className="text-text-secondary mb-1">{t("customer")}</p>
+                <p className="font-medium text-text-primary truncate">{row.customer}</p>
+              </div>
+              <div className="rounded-lg bg-background border border-border px-2.5 py-2">
+                <p className="text-text-secondary mb-1">{t("chef")}</p>
+                <p className="font-medium text-text-primary truncate">{row.chef}</p>
+              </div>
+              <div className="rounded-lg bg-background border border-border px-2.5 py-2 col-span-2">
+                <p className="text-text-secondary mb-1">{t("amount")}</p>
+                <p className="font-semibold text-text-primary">{row.amount}</p>
+              </div>
+            </div>
+
+            <div className="flex justify-end gap-2">
+              {row.status === "Pending" && (
+                <button
+                  onClick={() => updateOrderStatus(row.id, "Preparing")}
+                  className="p-2 text-primary hover:bg-primary-light rounded-lg transition-colors border border-transparent hover:border-primary-light"
+                  title="Mark as Preparing"
+                >
+                  <Clock size={16} />
+                </button>
+              )}
+              {row.status === "Preparing" && (
+                <button
+                  onClick={() => updateOrderStatus(row.id, "Delivered")}
+                  className="p-2 text-green-600 hover:bg-green-50 rounded-lg transition-colors border border-transparent hover:border-green-200"
+                  title="Mark as Delivered"
+                >
+                  <Check size={16} />
+                </button>
+              )}
+              <button
+                onClick={() => deleteOrder(row.id)}
+                className="p-2 text-text-secondary hover:text-red-500 hover:bg-red-50 rounded-lg transition-colors border border-transparent hover:border-red-200"
+                title="Delete Order"
+              >
+                <Trash2 size={16} />
+              </button>
+            </div>
+          </div>
+        ))}
+        {orders.length === 0 && (
+          <div className="px-4 py-10 text-center text-text-secondary text-sm">{t("no_orders")}</div>
+        )}
+      </div>
+
+      <div className="hidden sm:block overflow-x-auto">
         <table className="w-full text-start border-collapse">
           <thead>
             <tr className="bg-background text-text-secondary text-xs uppercase tracking-wider">

@@ -22,7 +22,7 @@ export function MainLayout() {
       
       <div className="flex-1 flex flex-col min-w-0 relative">
         <Header onMenuClick={() => setIsMobileMenuOpen(true)} />
-        <main className="flex-1 overflow-y-auto p-4 sm:p-6 md:p-8 border-s border-border shadow-inner overflow-x-hidden">
+        <main className="flex-1 overflow-y-auto p-3 sm:p-6 md:p-8 border-s border-border shadow-inner overflow-x-hidden">
           <div className="max-w-7xl mx-auto animate-fade-in">
             <Outlet />
           </div>

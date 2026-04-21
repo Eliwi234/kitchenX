@@ -7,13 +7,13 @@ export function DashboardPage() {
   const { t } = useTranslation();
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-5 sm:space-y-6">
       <div>
-        <h1 className="text-2xl font-bold text-text-primary tracking-tight">{t("dashboard_overview")}</h1>
-        <p className="text-text-secondary mt-1">{t("dashboard_desc")}</p>
+        <h1 className="text-xl sm:text-2xl font-bold text-text-primary tracking-tight">{t("dashboard_overview")}</h1>
+        <p className="text-sm sm:text-base text-text-secondary mt-1">{t("dashboard_desc")}</p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
         <StatCard
           title={t("total_sales")}
           value="$24,592.50"
@@ -44,7 +44,7 @@ export function DashboardPage() {
         />
       </div>
 
-      <div className="mt-8">
+      <div className="mt-6 sm:mt-8">
         <ActivityTable />
       </div>
     </div>
