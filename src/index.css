@@ -1,0 +1,73 @@
+@import "tailwindcss";
+
+@theme {
+  /* Brand */
+  --color-primary: #FF8422;
+  --color-primary-shadow: #FF7101;
+  --color-primary-dark: #E06E12;
+  --color-primary-light: #FFF4ED;
+  --color-secondary: #9BFF21;
+  --color-secondary-dark: #7ACC15;
+  --color-secondary-light: #9BFF21;
+  --color-on-secondary: #1A2E00;
+  
+  /* Retain exact charcoal shades for Sidebar */
+  --color-charcoal-50: #f9fafb;
+  --color-charcoal-100: #f3f4f6;
+  --color-charcoal-200: #e5e7eb;
+  --color-charcoal-300: #d1d5db;
+  --color-charcoal-400: #9ca3af;
+  --color-charcoal-500: #6b7280;
+  --color-charcoal-600: #4b5563;
+  --color-charcoal-700: #374151;
+  --color-charcoal-800: #1f2937;
+  --color-charcoal-900: #111827;
+  --color-charcoal: #1F2937;
+
+  /* Theme variables bound to roots */
+  --color-surface: var(--surface-v);
+  --color-background: var(--background-v);
+  --color-text-primary: var(--text-primary-v);
+  --color-text-secondary: var(--text-secondary-v);
+  --color-border: var(--border-v);
+
+  --font-sans: var(--font-family-v);
+}
+
+:root {
+  /* Premium Light Mode (Flutter Paletteish) */
+  --surface-v: #FFFFFF;
+  --background-v: #F9F9F9;
+  --text-primary-v: #1A1A1A;
+  --text-secondary-v: #757575;
+  --border-v: #E8E8E8;
+  --font-family-v: "Outfit", sans-serif;
+}
+
+[dir="rtl"] {
+  --font-family-v: "Noto Sans Arabic", sans-serif;
+}
+
+.dark {
+  /* Premium Slate Dark Mode */
+  --surface-v: #1E293B; /* Slate 800 */
+  --background-v: #0F172A; /* Slate 900 */
+  --text-primary-v: #F8FAFC; /* Slate 50 */
+  --text-secondary-v: #94A3B8; /* Slate 400 */
+  --border-v: #334155; /* Slate 700 */
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@layer base {
+  body {
+    @apply bg-background text-text-primary font-sans antialiased selection:bg-primary selection:text-white transition-colors duration-300;
+  }
+}
