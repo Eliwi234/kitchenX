@@ -1,26 +1,15 @@
 import { Check, Clock, Trash2 } from "lucide-react";
 import { useTranslation } from "react-i18next";
-import { useAppStore } from "../../../store/useAppStore";
-
-const statusStyles: Record<string, string> = {
-  Delivered: "bg-green-100 text-green-700",
-  Preparing: "bg-primary-light text-primary-dark",
-  Pending: "bg-yellow-100 text-yellow-700",
-};
+import { useOrderStore } from "../../../store/useOrderStore";
+import { generateMockOrder } from "../../../services/orderService";
+import { statusStyles } from "../utils/statusStyles";
 
 export function ActivityTable() {
-  const { orders, updateOrderStatus, deleteOrder, addMockOrder } = useAppStore();
+  const { orders, updateOrderStatus, deleteOrder, addMockOrder } = useOrderStore();
   const { t } = useTranslation();
 
   const handleSimulateNewOrder = () => {
-    addMockOrder({
-      id: `ORD-${Math.floor(1000 + Math.random() * 9000)}`,
-      customer: ["Yousef", "Ali", "Nour", "Maya", "Khaled"][Math.floor(Math.random() * 5)],
-      chef: ["Ahmed's Grill", "Lana's Kitchen", "Sweet Treats", "Mona's Bakery"][Math.floor(Math.random() * 4)],
-      status: "Pending",
-      amount: `$${(20 + Math.random() * 50).toFixed(2)}`,
-      date: "Just now",
-    });
+    addMockOrder(generateMockOrder());
   };
 
   return (

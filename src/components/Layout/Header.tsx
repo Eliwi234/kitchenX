@@ -1,13 +1,13 @@
 import { Bell, Search, Moon, Sun, Menu } from "lucide-react";
 import { useTranslation } from "react-i18next";
-import { useAppStore } from "../../store/useAppStore";
+import { useUIStore } from "../../store/useUIStore";
 
 interface HeaderProps {
   onMenuClick?: () => void;
 }
 
 export function Header({ onMenuClick }: HeaderProps) {
-  const { theme, toggleTheme, language, setLanguage } = useAppStore();
+  const { theme, toggleTheme, language, setLanguage } = useUIStore();
   const { t } = useTranslation();
 
   return (

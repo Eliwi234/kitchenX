@@ -1,11 +1,12 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import * as z from "zod";
 import { useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { Input } from "../../components/ui/Input";
 import { Button } from "../../components/ui/Button";
+import { login } from "../../services/authService";
+import { getLoginSchema } from "./schemas/loginSchema";
 
 type LoginFormValues = {
   email: string;
@@ -16,16 +17,7 @@ export function LoginPage() {
   const navigate = useNavigate();
   const { t } = useTranslation();
 
-  const loginSchema = useMemo(
-    () =>
-      z.object({
-        email: z.string().email(t("validation_email_invalid")),
-        password: z
-          .string()
-          .min(8, t("validation_password_min", { count: 8 })),
-      }),
-    [t]
-  );
+  const loginSchema = useMemo(() => getLoginSchema(t), [t]);
 
   const {
     register,
@@ -36,7 +28,7 @@ export function LoginPage() {
   });
 
   const onSubmit = async () => {
-    await new Promise((resolve) => setTimeout(resolve, 800));
+    await login();
     navigate("/dashboard");
   };
 
